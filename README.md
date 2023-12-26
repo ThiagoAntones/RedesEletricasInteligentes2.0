@@ -7,23 +7,26 @@ Software Gestão de Estrutura Analítica de Projetos de Redes Elétricas Intelig
 
 <div align="center"> 
 <h2>Interface principal do programa Fig 1</h2>
-<img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/f6c3c15b-838e-4cac-a1ab-98b183d6810a" width="700px"/>
+<img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/c295e03e-e606-4d68-9f4f-408ae7df9ecc" width="700px"/>
 </div>
 <div align="center">
-<h2>Interface para o CRUD de projetos Fig 2</h2>
-  <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/89520ece-1f59-49bf-a829-3e63d233c160" width="700px"/>
+<h2>Interface para o CRUD de projetos Fig 2 - Menu Expandido</h2>
+  <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/5a0b35c3-0221-4bdb-bc60-b4ffad479f5b" width="700px"/>
+</div>
+<h2>Interface para o CRUD de projetos Fig 3 - Menu Recolhido</h2>
+  <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/f8bc46af-5d16-4daf-a690-494ada107de3" width="700px"/>
 </div>
 <div align="center">
-<h2>Interface para o CRUD dos níveis de gerenciamento do projeto Fig 3</h2>
+<h2>Interface para o CRUD dos níveis de gerenciamento do projeto Fig 4</h2>
   <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/0dfc821d-84c8-4ca0-9f6c-706c71ab1504" width="700px"/>
 </div>
 <div align="center">
-<h2>Interface para o CRUD dos níveis de gerenciamento do projeto (visão após selecionar o projeto a realizar os níveis) Fig 4</h2>
-  <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/5a98ae98-15e4-46c4-8874-ded9f065b3a6" width="700px"/>
+<h2>Interface para o CRUD dos níveis de gerenciamento do projeto (visão após selecionar o projeto a realizar os níveis) Fig 5</h2>
+  <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/d68174d9-c324-413c-bb58-b72fa0677f74" width="700px"/>
 </div>
 <div align="center">
-<h2>Consulta de todos os projetos cadastrados Fig 5</h2>
-  <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/c483f1f4-38bd-4286-b2ee-6b55e7e4e833" width="700px"/>
+<h2>Consulta de todos os projetos cadastrados Fig 6</h2>
+  <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/68559449-4d2a-4f84-b818-8dfe3fceb694" width="700px"/>
 </div>
 <div align="center">
 <h2>Modelo conceitual do banco de dados</h2>
