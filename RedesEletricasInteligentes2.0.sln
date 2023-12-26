@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedesEletricasInteligentes", "ImplementacaoRedesEletricasInteligentes\RedesEletricasInteligentes.csproj", "{1E89D451-3F21-4275-96F4-B2B226E81F18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiMysqlRedesEletricasInteligentes", "ApiMysqlRedesEletricasInteligentes\ApiMysqlRedesEletricasInteligentes.csproj", "{D9867080-FA3F-437D-A1C0-00D52E850BB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E89D451-3F21-4275-96F4-B2B226E81F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E89D451-3F21-4275-96F4-B2B226E81F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E89D451-3F21-4275-96F4-B2B226E81F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E89D451-3F21-4275-96F4-B2B226E81F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9867080-FA3F-437D-A1C0-00D52E850BB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9867080-FA3F-437D-A1C0-00D52E850BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9867080-FA3F-437D-A1C0-00D52E850BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9867080-FA3F-437D-A1C0-00D52E850BB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D49465EA-B763-4476-8261-F89ACEC3119A}
+	EndGlobalSection
+EndGlobal
