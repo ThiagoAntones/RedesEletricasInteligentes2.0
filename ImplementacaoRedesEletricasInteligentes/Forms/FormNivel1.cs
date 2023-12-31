@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImplementacaoRedesEletricasInteligentes.Classes;
+using ImplementacaoRedesEletricasInteligentes.Models;
 
 namespace ImplementacaoRedesEletricasInteligentes.Forms
 {
@@ -55,9 +56,9 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms
             }
             else
             {
-                var nivel1 = new Nivel1();
-                var TaskNivel1 = await nivel1.ObterNivel1IDAsync(int.Parse(txtPesquisa.Text));
-                if (TaskNivel1 == null)
+                var nivel1Service = new Nivel1Services();
+                var listaNivel1 = await nivel1Service.ObterNivel1IDAsync(int.Parse(txtPesquisa.Text));
+                if (listaNivel1 == null)
                 {
                     MessageBox.Show("ID consultado não existe!", "Redes elétricas inteligentes", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     CarregarNivel1();
@@ -66,12 +67,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms
                 }
                 else
                 {
-                    var listaProjeto = new List<Nivel1>
-                    {
-                        new Nivel1 {  id = TaskNivel1.id, projeto = TaskNivel1.projeto, descricao = TaskNivel1.descricao }
-                    };
-
-                    dgvNivel1.DataSource = listaProjeto;
+                    dgvNivel1.DataSource = listaNivel1;
                     ConfigGradeDGV();
                     lblMensagem.Visible = false;
                 }
@@ -91,12 +87,14 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms
                 lblMensagem.Text = "Adicionando nível 1...";
                 lblMensagem.Visible = true;
 
-                var nivel1 = new Nivel1()
+                var nivel1UI = new Nivel1UI()
                 {
                     projeto = int.Parse(txtProjeto.Text),
                     descricao = txtDescricao.Text
                 };
-                var listaNivel1 = await nivel1.CadastrarNivel1Async(nivel1);
+
+                var nivel1Service = new Nivel1Services();
+                await nivel1Service.CadastrarNivel1Async(nivel1UI);
 
                 lblMensagem.Visible = false;
                 CarregarNivel1();
@@ -110,13 +108,15 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms
             lblMensagem.Text = "Editando nível 1...";
             lblMensagem.Visible = true;
 
-            var nivel1 = new Nivel1()
+            var nivel1UI = new Nivel1UI()
             {
                 id = int.Parse(txtAtividade.Text),
                 projeto = int.Parse(txtProjeto.Text),
                 descricao = txtDescricao.Text
             };
-            var listaNivel1 = await nivel1.EditarNivel1Async(int.Parse(txtAtividade.Text),nivel1);
+
+            var nivel1Service = new Nivel1Services();
+            await nivel1Service.EditarNivel1Async(nivel1UI);
 
             lblMensagem.Visible = false;
             CarregarNivel1();
@@ -128,9 +128,16 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms
         {
             lblMensagem.Text = "Excluindo projeto...";
             lblMensagem.Visible = true;
-            
-            var nivel1 = new Nivel1();
-            var listaNivel1 = await nivel1.DeletarNivel1Async(int.Parse(txtAtividade.Text));
+
+            var nivel1UI = new Nivel1UI()
+            {
+                id = int.Parse(txtAtividade.Text),
+                projeto = int.Parse(txtProjeto.Text),
+                descricao = txtDescricao.Text
+            };
+
+            var nivel1Service = new Nivel1Services();
+            await nivel1Service.DeletarNivel1Async(nivel1UI);
 
             lblMensagem.Visible = false;
             CarregarNivel1();
@@ -146,7 +153,14 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms
         //Abrir o form nível 2 quando clicar no botão do nível 2
         private void Level2_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new FormNivel2());
+            if (txtProjeto.Text == "automático" || txtAtividade.Text == "automático" || txtDescricao.Text == "")
+            {
+                MessageBox.Show("Selecione um nível 1 cadastrado para prosseguir ao nível 2!", "Redes elétricas inteligentes", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                OpenChildForm(new FormNivel2());
+            }
         }
 
         //Quando clicar no DGV
@@ -169,7 +183,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms
             lblMensagem.Text = "Buscando, aguarde...";
             lblMensagem.Visible = true;
 
-            var nivel1 = new Nivel1();
+            var nivel1 = new Nivel1Services();
             var listaNivel1 = await nivel1.ObterNivel1Async();
 
             dgvNivel1.DataSource = listaNivel1;

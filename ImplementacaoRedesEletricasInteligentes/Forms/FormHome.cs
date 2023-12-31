@@ -28,7 +28,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms
         public async void CarregarQTDprojetos()
         {
             lblMensagem.Visible = true;
-            var projeto = new Projeto();
+            var projeto = new ProjetoServices();
             var listaProjeto = await projeto.ObterProjetosAsync();
             lblNumeroProjetos.Text = listaProjeto.Count.ToString();
             lblMensagem.Visible = false;

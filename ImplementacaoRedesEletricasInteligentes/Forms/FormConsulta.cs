@@ -38,9 +38,9 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
             }
             else
             {
-                var projeto = new Projeto();
-                var TaskProjeto = await projeto.ObterProjetoIDAsync(int.Parse(txtPesquisa.Text));
-                if (TaskProjeto == null)
+                var projeto = new ProjetoServices();
+                var listaProjeto = await projeto.ObterProjetoIDAsync(int.Parse(txtPesquisa.Text));
+                if (listaProjeto == null)
                 {
                     MessageBox.Show("ID consultado não existe!", "Redes elétricas inteligentes", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     CarregarProjetos();
@@ -48,11 +48,6 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
                 }
                 else
                 {
-                    var listaProjeto = new List<Projeto>
-                    {
-                        new Projeto {  id = TaskProjeto.id, titulo = TaskProjeto.titulo, descricao = TaskProjeto.descricao, inicio = TaskProjeto.inicio, termino = TaskProjeto.termino, custo = TaskProjeto.custo }
-                    };
-
                     dgvProjetos.DataSource = listaProjeto;
                     ConfigGradeDGV();
                     lblMensagem.Visible = false;
@@ -69,7 +64,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
             lblMensagem.Text = "Buscando, aguarde...";
             lblMensagem.Visible = true;
 
-            var projeto = new Projeto();
+            var projeto = new ProjetoServices();
             var listaProjeto = await projeto.ObterProjetosAsync();
 
             dgvProjetos.DataSource = listaProjeto;

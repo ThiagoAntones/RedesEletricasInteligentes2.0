@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiMysqlRedesEletricasInteligentes.Models;
+using ApiMysqlRedesEletricasInteligentes.Api;
+using ApiMysqlRedesEletricasInteligentes.ModelApi;
+using Newtonsoft.Json;
 
 namespace ApiMysqlRedesEletricasInteligentes.Controllers
 {
@@ -22,60 +25,37 @@ namespace ApiMysqlRedesEletricasInteligentes.Controllers
 
         // GET: api/Nivel1
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Nivel1>>> GetNivel1s()
+        public async Task<ActionResult<IEnumerable<Nivel1Api>>?> GetNivel1s()
         {
-          if (_context.Nivel1s == null)
-          {
-              return NotFound();
-          }
-            return await _context.Nivel1s.ToListAsync();
+            var nivel1 = await _context.Nivel1s.Select(p => new { p.Id, p.Projeto, p.Descricao }).ToListAsync();
+
+            return Ok(nivel1);
         }
 
         // GET: api/Nivel1/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Nivel1>> GetNivel1(int id)
+        public async Task<ActionResult<IEnumerable<Nivel1Api>>?> GetNivel1(int id)
         {
-          if (_context.Nivel1s == null)
-          {
-              return NotFound();
-          }
-            var nivel1 = await _context.Nivel1s.FindAsync(id);
-
-            if (nivel1 == null)
-            {
-                return NotFound();
-            }
-
-            return nivel1;
+            var nivel1 = await _context.Nivel1s.Where(p => p.Id.ToString().Contains(id.ToString())).Select(p => new { p.Id, p.Projeto, p.Descricao }).ToListAsync();
+            if (nivel1.Count == 0)
+                return null;
+            else
+                return Ok(nivel1);
         }
 
         // PUT: api/Nivel1/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutNivel1(int id, Nivel1 nivel1)
+        public async Task<IActionResult> PutNivel1(Nivel1Api nivel1Model)
         {
-            if (id != nivel1.Id)
-            {
-                return BadRequest();
-            }
+            var nivel1 = new Nivel1();
+            nivel1.Id = nivel1Model.id;
+            nivel1.Projeto = nivel1Model.projeto;
+            nivel1.Descricao = nivel1Model.descricao;
 
             _context.Entry(nivel1).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!Nivel1Exists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -83,12 +63,12 @@ namespace ApiMysqlRedesEletricasInteligentes.Controllers
         // POST: api/Nivel1
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Nivel1>> PostNivel1(Nivel1 nivel1)
+        public async Task<ActionResult<Nivel1>> PostNivel1(Nivel1Api nivel1Model)
         {
-          if (_context.Nivel1s == null)
-          {
-              return Problem("Entity set 'DbRedesinteContext.Nivel1s'  is null.");
-          }
+            var nivel1 = new Nivel1();
+            nivel1.Projeto = nivel1Model.projeto;
+            nivel1.Descricao = nivel1Model.descricao;
+
             _context.Nivel1s.Add(nivel1);
             await _context.SaveChangesAsync();
 
@@ -97,27 +77,17 @@ namespace ApiMysqlRedesEletricasInteligentes.Controllers
 
         // DELETE: api/Nivel1/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteNivel1(int id)
+        public async Task<IActionResult> DeleteNivel1(Nivel1Api nivel1Model)
         {
-            if (_context.Nivel1s == null)
-            {
-                return NotFound();
-            }
-            var nivel1 = await _context.Nivel1s.FindAsync(id);
-            if (nivel1 == null)
-            {
-                return NotFound();
-            }
+            var nivel1 = new Nivel1();
+            nivel1.Id = nivel1Model.id;
+            nivel1.Projeto = nivel1Model.projeto;
+            nivel1.Descricao = nivel1Model.descricao;
 
             _context.Nivel1s.Remove(nivel1);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool Nivel1Exists(int id)
-        {
-            return (_context.Nivel1s?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImplementacaoRedesEletricasInteligentes.Classes;
+using ImplementacaoRedesEletricasInteligentes.Models;
 
 namespace ImplementacaoRedesEletricasInteligentes.Forms{
     public partial class FormNivel2 : Form{
@@ -44,9 +45,9 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
             }
             else
             {
-                var nivel2 = new Nivel2();
-                var TaskNivel2 = await nivel2.ObterNivel2IDAsync(int.Parse(txtPesquisa.Text));
-                if (TaskNivel2 == null)
+                var nivel2Service = new Nivel2Services();
+                var listaNivel2 = await nivel2Service.ObterNivel2IDAsync(int.Parse(txtPesquisa.Text));
+                if (listaNivel2 == null)
                 {
                     MessageBox.Show("ID consultado não existe!", "Redes elétricas inteligentes", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     CarregarNivel2();
@@ -55,11 +56,6 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
                 }
                 else
                 {
-                    var listaNivel2 = new List<Nivel2>
-                    {
-                        new Nivel2 {  id = TaskNivel2.id, projeto = TaskNivel2.projeto, nivel1 = TaskNivel2.nivel1, descricao = TaskNivel2.descricao}
-                    };
-
                     dgvNivel2.DataSource = listaNivel2;
                     ConfigGradeDGV();
                     lblMensagem.Visible = false;
@@ -76,16 +72,18 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
                 MessageBox.Show("Preencha a descrição para prosseguir!","Redes elétricas inteligentes",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 return;
             }else{
-                lblMensagem.Text = "Adicionando projeto...";
+                lblMensagem.Text = "Adicionando nível 2...";
                 lblMensagem.Visible = true;
 
-                var nivel2 = new Nivel2()
+                var nivel2UI = new Nivel2UI()
                 {
                     projeto = int.Parse(txtProjeto.Text),
                     nivel1 = int.Parse(txtNivel1.Text),
                     descricao = txtDescricao.Text
                 };
-                var BlistaNivel2 = await nivel2.CadastrarNivel2Async(nivel2);
+
+                var nivel2Service = new Nivel2Services();
+                await nivel2Service.CadastrarNivel2Async(nivel2UI);
 
                 lblMensagem.Visible = false;
                 CarregarNivel2();
@@ -94,25 +92,41 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
         }
 
         //Editando nível 2
-        private void btnEditProjeto_Click(object sender, EventArgs e){
-            
-            CarregarNivel2();
-            Limpar();
-        }
-
-        //Deletando nível 2
-        private async void btnDelProjeto_Click(object sender, EventArgs e){
-            lblMensagem.Text = "Excluindo projeto...";
+        private async void btnEditProjeto_Click(object sender, EventArgs e){
+            lblMensagem.Text = "Editando nível 2...";
             lblMensagem.Visible = true;
 
-            var nivel2 = new Nivel2()
+            var nivel2UI = new Nivel2UI()
             {
                 id = int.Parse(txtAtividade.Text),
                 projeto = int.Parse(txtProjeto.Text),
                 nivel1 = int.Parse(txtNivel1.Text),
                 descricao = txtDescricao.Text
             };
-            var BlistaNivel2 = await nivel2.CadastrarNivel2Async(nivel2);
+
+            var nivel2Service = new Nivel2Services();
+            await nivel2Service.EditarNivel2Async(nivel2UI);
+
+            lblMensagem.Visible = false;
+            CarregarNivel2();
+            Limpar();
+        }
+
+        //Deletando nível 2
+        private async void btnDelProjeto_Click(object sender, EventArgs e){
+            lblMensagem.Text = "Excluindo nível 2...";
+            lblMensagem.Visible = true;
+
+            var nivel2UI = new Nivel2UI()
+            {
+                id = int.Parse(txtAtividade.Text),
+                projeto = int.Parse(txtProjeto.Text),
+                nivel1 = int.Parse(txtNivel1.Text),
+                descricao = txtDescricao.Text
+            };
+
+            var nivel2Service = new Nivel2Services();
+            await nivel2Service.DeletarNivel2Async(nivel2UI);
 
             lblMensagem.Visible = false;
             CarregarNivel2();
@@ -152,7 +166,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
             lblMensagem.Text = "Buscando, aguarde...";
             lblMensagem.Visible = true;
 
-            var nivel2 = new Nivel2();
+            var nivel2 = new Nivel2Services();
             var listaNivel2 = await nivel2.ObterNivel2Async();
 
             dgvNivel2.DataSource = listaNivel2;

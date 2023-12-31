@@ -41,11 +41,11 @@ namespace ImplementacaoRedesEletricasInteligentes{
         private void btnHome_Click(object sender, EventArgs e)
         {
             ButtonAtual = 1;
-            AtivacaoBtn(sender, RGBcores.CorBackgroundCampo);
             leftBorderBtn.Visible = false;
             iconCurrentChildForm.IconChar = IconChar.Battery;
             iconCurrentChildForm.IconColor = Color.Gold;
             lblTitleChildForm.Text = "Redes Elétricas Inteligentes";
+            AtivacaoBtn(sender, RGBcores.CorBackgroundCampo);
             OpenChildForm(new Forms.FormHome());
         }
 
@@ -155,6 +155,7 @@ namespace ImplementacaoRedesEletricasInteligentes{
             }
         }
 
+        //Quando a lateral do form estiver expando > 200px
         public void expandido()
         {
             btnHome.BackColor = Color.FromArgb(0, 101, 161);
@@ -324,6 +325,7 @@ namespace ImplementacaoRedesEletricasInteligentes{
             base.WndProc(ref m);
         }
 
+        //Redimensionar menu após clicar para expandir ou reduzir
         private void Menu_Resize(object sender, EventArgs e)
         {
             AjustarForm();
@@ -343,13 +345,14 @@ namespace ImplementacaoRedesEletricasInteligentes{
             }
         }
 
-        //Botões Minimize,Maxmize,Exit,Recall do Menu
+        //Minimizar Programa
         private void btnMinize_Click(object sender, EventArgs e)
         {
             TamanhoForm = this.ClientSize;
             this.WindowState = FormWindowState.Minimized;
         }
 
+        //Maximizar Programa
         private void btnMaxmize_Click(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Normal)
@@ -364,6 +367,7 @@ namespace ImplementacaoRedesEletricasInteligentes{
             }
         }
 
+        //Fechar Programa
         private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();

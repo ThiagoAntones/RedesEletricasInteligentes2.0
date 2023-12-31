@@ -90,7 +90,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
 
         //Método para carregar os projetos
         public async void CarregarProjetos() {
-            var projeto = new Projeto();
+            var projeto = new ProjetoServices();
             var ListaProjeto = await projeto.ObterProjetosAsync();
 
             cbProjetos.ValueMember = "id";

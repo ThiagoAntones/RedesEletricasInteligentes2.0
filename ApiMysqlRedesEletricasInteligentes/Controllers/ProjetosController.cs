@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ApiMysqlRedesEletricasInteligentes.Models;
+using ApiMysqlRedesEletricasInteligentes.ModelApi;
 
 namespace ApiMysqlRedesEletricasInteligentes.Controllers
 {
@@ -22,61 +23,40 @@ namespace ApiMysqlRedesEletricasInteligentes.Controllers
 
         // GET: api/Projetos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Projeto>>> GetProjetos()
+        public async Task<ActionResult<IEnumerable<ProjetoApi>>?> GetProjetos()
         {
-          if (_context.Projetos == null)
-          {
-              return NotFound();
-          }
-            return await _context.Projetos.ToListAsync();
+            var projetos = await _context.Projetos.Select(p => new { p.Id, p.Titulo, p.Descricao, p.Inicio, p.Termino, p.Custo }).ToListAsync();
+
+            return Ok(projetos);
         }
 
         // GET: api/Projetos/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Projeto>> GetProjeto(int id)
+        public async Task<ActionResult<IEnumerable<ProjetoApi>>?> GetProjeto(int id)
         {
-          if (_context.Projetos == null)
-          {
-              return NotFound();
-          }
-
-          var projeto = await _context.Projetos.FindAsync(id);
-
-          if (projeto == null)
-          {
-              return NotFound();
-          }
-
-              return projeto;
+            var projetos = await _context.Projetos.Where(p => p.Id.ToString().Contains(id.ToString())).Select(p => new { p.Id, p.Titulo, p.Descricao, p.Inicio, p.Termino, p.Custo }).ToListAsync();
+            if(projetos.Count == 0)
+                return null;
+            else
+                return Ok(projetos);
         }
 
         // PUT: api/Projetos/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProjeto(int id, Projeto projeto)
+        public async Task<IActionResult> PutProjeto(ProjetoApi projetoModel)
         {
-            if (id != projeto.Id)
-            {
-                return BadRequest();
-            }
+            var projeto = new Projeto();
+            projeto.Id = projetoModel.id;
+            projeto.Titulo = projetoModel.titulo;
+            projeto.Descricao = projetoModel.descricao;
+            projeto.Inicio = projetoModel.inicio;
+            projeto.Termino = projetoModel.termino;
+            projeto.Custo = projetoModel.custo;
 
             _context.Entry(projeto).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProjetoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -84,12 +64,15 @@ namespace ApiMysqlRedesEletricasInteligentes.Controllers
         // POST: api/Projetos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Projeto>> PostProjeto(Projeto projeto)
+        public async Task<ActionResult<Projeto>> PostProjeto(ProjetoApi projetoModel)
         {
-          if (_context.Projetos == null)
-          {
-              return Problem("Entity set 'DbRedesinteContext.Projetos'  is null.");
-          }
+            var projeto = new Projeto();
+            projeto.Titulo = projetoModel.titulo;
+            projeto.Descricao = projetoModel.descricao;
+            projeto.Inicio = projetoModel.inicio;
+            projeto.Termino = projetoModel.termino;
+            projeto.Custo = projetoModel.custo;
+
             _context.Projetos.Add(projeto);
             await _context.SaveChangesAsync();
 
@@ -98,27 +81,20 @@ namespace ApiMysqlRedesEletricasInteligentes.Controllers
 
         // DELETE: api/Projetos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProjeto(int id)
+        public async Task<IActionResult> DeleteProjeto(ProjetoApi projetoModel)
         {
-            if (_context.Projetos == null)
-            {
-                return NotFound();
-            }
-            var projeto = await _context.Projetos.FindAsync(id);
-            if (projeto == null)
-            {
-                return NotFound();
-            }
+            var projeto = new Projeto();
+            projeto.Id = projetoModel.id;
+            projeto.Titulo = projetoModel.titulo;
+            projeto.Descricao = projetoModel.descricao;
+            projeto.Inicio = projetoModel.inicio;
+            projeto.Termino = projetoModel.termino;
+            projeto.Custo = projetoModel.custo;
 
             _context.Projetos.Remove(projeto);
             await _context.SaveChangesAsync();
 
             return NoContent();
-        }
-
-        private bool ProjetoExists(int id)
-        {
-            return (_context.Projetos?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

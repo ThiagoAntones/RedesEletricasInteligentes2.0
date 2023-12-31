@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Media.Media3D;
 using ImplementacaoRedesEletricasInteligentes.Classes;
+using ImplementacaoRedesEletricasInteligentes.Models;
 
 namespace ImplementacaoRedesEletricasInteligentes.Forms{
     public partial class FormProjeto : Form{
@@ -44,9 +45,9 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
             }
             else
             {
-                var projeto = new Projeto();
-                var TaskProjeto = await projeto.ObterProjetoIDAsync(int.Parse(txtPesquisa.Text));
-                if (TaskProjeto == null)
+                var projeto = new ProjetoServices();
+                var listaProjeto = await projeto.ObterProjetoIDAsync(int.Parse(txtPesquisa.Text));
+                if (listaProjeto == null)
                 {
                     MessageBox.Show("ID consultado não existe!", "Redes elétricas inteligentes", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     CarregarProjetos();
@@ -55,11 +56,6 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
                 }
                 else
                 {
-                    var listaProjeto = new List<Projeto>
-                    {
-                        new Projeto {  id = TaskProjeto.id, titulo = TaskProjeto.titulo, descricao = TaskProjeto.descricao, inicio = TaskProjeto.inicio, termino = TaskProjeto.termino, custo = TaskProjeto.custo }
-                    };
-
                     dgvProjetos.DataSource = listaProjeto;
                     ConfigGradeDGV();
                     lblMensagem.Visible = false;
@@ -92,7 +88,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
                 lblMensagem.Text = "Adicionando projeto...";
                 lblMensagem.Visible = true;
 
-                var projeto = new Projeto ()
+                var projetoUI = new ProjetoUI()
                 { 
                     titulo = txtTitulo.Text,
                     descricao = txtDescricao.Text,
@@ -101,7 +97,9 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
                     custo = double.Parse(txtCusto.Text)
 
                 };
-                var listaProjeto = await projeto.CadastrarProjetoAsync(projeto);
+
+                var projetoService = new ProjetoServices();
+                await projetoService.CadastrarProjetoAsync(projetoUI);
 
                 lblMensagem.Visible = false;
                 CarregarProjetos();
@@ -114,7 +112,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
             lblMensagem.Text = "Editando projeto...";
             lblMensagem.Visible = true;
 
-            var projeto = new Projeto()
+            var projetoUI = new ProjetoUI()
             {
                 id = int.Parse(txtCodigo.Text),
                 titulo = txtTitulo.Text,
@@ -123,7 +121,9 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
                 termino = dtTermino.Value.ToString("yyyy-MM-dd"),
                 custo = double.Parse(txtCusto.Text)
             };
-            var listaProjeto = await projeto.EditarProjetoAsync(int.Parse(txtCodigo.Text),projeto);
+
+            var projetoService = new ProjetoServices();
+            await projetoService.EditarProjetoAsync(projetoUI);
 
             lblMensagem.Visible = false;
             CarregarProjetos();
@@ -135,8 +135,18 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
             lblMensagem.Text = "Excluindo projeto...";
             lblMensagem.Visible = true;
 
-            var projeto = new Projeto();
-            var listaProjeto = await projeto.DeletarProjetoAsync(int.Parse(txtCodigo.Text));
+            var projetoUI = new ProjetoUI()
+            {
+                id = int.Parse(txtCodigo.Text),
+                titulo = txtTitulo.Text,
+                descricao = txtDescricao.Text,
+                inicio = dtInicio.Value.ToString("yyyy-MM-dd"),
+                termino = dtTermino.Value.ToString("yyyy-MM-dd"),
+                custo = double.Parse(txtCusto.Text)
+            };
+
+            var projetoService = new ProjetoServices();
+            await projetoService.DeletarProjetoAsync(projetoUI);
 
             lblMensagem.Visible = false;
             CarregarProjetos();
@@ -172,7 +182,7 @@ namespace ImplementacaoRedesEletricasInteligentes.Forms{
             lblMensagem.Text = "Buscando, aguarde...";
             lblMensagem.Visible = true;
 
-            var projeto = new Projeto();
+            var projeto = new ProjetoServices();
             var listaProjeto = await projeto.ObterProjetosAsync();
 
             dgvProjetos.DataSource = listaProjeto;
