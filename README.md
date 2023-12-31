@@ -7,7 +7,7 @@ Software Gestão de Estrutura Analítica de Projetos de Redes Elétricas Intelig
 
 <div align="center"> 
 <h2>Interface principal do programa Fig 1</h2>
-<img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/c295e03e-e606-4d68-9f4f-408ae7df9ecc" width="700px"/>
+<img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/7841cc7f-0f47-4a2b-9029-024fe6868b56" width="700px"/>
 <h2>Interface para o CRUD de projetos Fig 2 - Menu Expandido</h2>
   <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/5a0b35c3-0221-4bdb-bc60-b4ffad479f5b" width="700px"/>
 <h2>Interface para o CRUD de projetos Fig 3 - Menu Recolhido</h2>
