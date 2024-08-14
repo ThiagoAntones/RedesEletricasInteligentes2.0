@@ -18,6 +18,8 @@ Software Gestão de Estrutura Analítica de Projetos de Redes Elétricas Intelig
   <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/d68174d9-c324-413c-bb58-b72fa0677f74" width="700px"/>
 <h2>Consulta de todos os projetos cadastrados Fig 6</h2>
   <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/68559449-4d2a-4f84-b818-8dfe3fceb694" width="700px"/>
+<h2>EAP (Estrutura Analítica de Projetos)</h2>
+  <img src="https://github.com/user-attachments/assets/d3e7750d-7d9c-4498-a84a-f1f22415fc5e" width="700px"/>
 <h2>Modelo conceitual do banco de dados</h2>
   <img src="https://github.com/ThiagoAntones/RedesEletricasInteligentes2.0/assets/149174103/2c117f03-d2f1-436e-b5d1-af2a86e732ba" width="700px"/>
 <h2>Modelo lógico do banco de dados</h2>
